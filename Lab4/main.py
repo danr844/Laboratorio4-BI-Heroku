@@ -1,3 +1,4 @@
+from tokenize import String
 from typing import Optional
 from joblib import load
 from fastapi import FastAPI
@@ -38,8 +39,8 @@ class DataModel(BaseModel):
 #Esta función retorna los nombres de las columnas correspondientes con el modelo esxportado en joblib.
     def columns(self):
         return ["Adult Mortality", "infant deaths", "Alcohol","percentage expenditure","Hepatitis B", "Measles", "BMI",
-                "under-five deaths", "Polio", "Total expenditure", "Diphtheria", "HIV/AIDS", "DGP", "Population",
-                "thinness 10-19 years", "thinness 5-9 years", "Income composition of resources", "Schooling"]
+                "under-five deaths", "Polio", "Total expenditure", "Diphtheria", "HIV/AIDS", "GDP", "Population",
+                "thinness  10-19 years", "thinness 5-9 years", "Income composition of resources", "Schooling"] 
 
 class DataModelWithY(BaseModel):
 
@@ -62,15 +63,7 @@ class DataModelWithY(BaseModel):
     thinness_10_19_years: float
     thinness_5_9_years: float
     income_composition_of_resources	: float
-    schooling: float
-    #class Config:
-      #orm_mode = True
-
-#Esta función retorna los nombres de las columnas correspondientes con el modelo esxportado en joblib.
-    def columns(self):
-        return ["Life expectancy","Adult Mortality", "infant deaths", "Alcohol","percentage expenditure","Hepatitis B", "Measles", "BMI",
-                "under-five deaths", "Polio", "Total expenditure", "Diphtheria", "HIV/AIDS", "DGP", "Population",
-                "thinness 10-19 years", "thinness 5-9 years", "Income composition of resources", "Schooling"]              
+    schooling: float          
 
 class DataLista(BaseModel):
    dataL: List[DataModelWithY]
@@ -90,23 +83,24 @@ def read_item(item_id: int, q: Optional[str] = None):
 def make_predictions(dataModel: DataModel):
     df = pd.DataFrame(dataModel.dict(), index=[0])
     df.columns = dataModel.columns()
-    model = load("assets/modelo.joblib")
+    model = load("assets/modelo.pkl")
     result = model.predict(df)
-    return result[0]
+    resultado="La esperanza de vida es: "+ str(result[0])
+    return resultado
 
 @app.post("/R2")
 def compare_data(dataModel: DataLista):
-    #df = pd.DataFrame(dataModel.dataL, index=[0])
     df=pd.DataFrame.from_records([s.dict() for s in dataModel.dataL])
     df.columns = ["Life expectancy","Adult Mortality", "infant deaths", "Alcohol","percentage expenditure","Hepatitis B", "Measles", "BMI",
-                "under-five deaths", "Polio", "Total expenditure", "Diphtheria", "HIV/AIDS", "DGP", "Population",
-                "thinness 10-19 years", "thinness 5-9 years", "Income composition of resources", "Schooling"] 
+                "under-five deaths", "Polio", "Total expenditure", "Diphtheria", "HIV/AIDS", "GDP", "Population",
+                "thinness  10-19 years", "thinness 5-9 years", "Income composition of resources", "Schooling"] 
     print(df)
-    model = load("assets/modelo.joblib")
+    model = load("assets/modelo.pkl")
     # Se selecciona la variable objetivo, en este caso "Life expectancy". 
     Y_Dado = df['Life expectancy']
     df=df.drop(['Life expectancy'], axis=1)
     result = model.predict(df)
     R2=r2_score(Y_Dado, result)
-    return R2
+    resultado="El R2 es: "+ str(R2)
+    return resultado
     
