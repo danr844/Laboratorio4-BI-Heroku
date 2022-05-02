@@ -12,6 +12,7 @@ from pydantic import BaseModel
 # Para determinar el rendimiento del modelo con las métricas MSE, MAE y R2
 from sklearn.metrics import r2_score
 
+
 class DataModel(BaseModel):
 
 # Estas varibles permiten que la librería pydantic haga el parseo entre el Json recibido y el modelo declarado.
