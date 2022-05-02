@@ -1,0 +1,71 @@
+Para la ejecución del programa es necesario un programa para poder enviar peticiones POST, también hay que conocer cuáles son las rutas del programa:
+http://127.0.0.1:8000/predict -Para obtener la predicción que realiza el modelo propuesto
+http://127.0.0.1:8000/R2 -Para calcular el R cuadrado de los datos subidos y de las prediciones para la variable Life Expectancy
+Y para finalizar es necesario 2 tipos de formato de Json:
+1. Para realizar el predict, el formato debe ser de la siguiente forma
+{
+    "adult_mortality": 71.0,
+    "infant_deaths": 1.0,
+    "alcohol": 9.97,
+    "percentage_expenditure": 3829.550928,
+    "hepatitis_B": 95.0,
+    "measles": 91.0,
+    "bmi": 6.3,
+    "under_five_deaths": 1.0,
+    "polio": 92.0,
+    "total_expenditure": 8.32,
+    "diphtheria": 93.0,
+    "hiv_aids": 0.1,
+    "gdp": 23465.38559,
+    "population": 198954.0,
+    "thinness_10_19_years": 0.7,
+    "thinness_5_9_years": 0.7,
+    "income_composition_of_resources": 0.905,
+    "schooling": 20.6
+}
+2. Para calcular el R2 el formato debe ser de la siguiente forma:
+{
+    "dataL": [
+        {
+            "life_expectancy": 59.9,
+            "adult_mortality": 271.0,
+            "infant_deaths": 64.0,
+            "alcohol": 0.01,
+            "percentage_expenditure": 73.52358168,
+            "hepatitis_B": 62.0,
+            "measles": 492.0,
+            "bmi": 18.6,
+            "under_five_deaths": 86.0,
+            "polio": 58.0,
+            "total_expenditure": 8.18,
+            "diphtheria": 62.0,
+            "hiv_aids": 0.1,
+            "gdp": 612.696514,
+            "population": 327582.0,
+            "thinness_10_19_years": 17.5,
+            "thinness_5_9_years": 17.5,
+            "income_composition_of_resources": 0.476,
+            "schooling": 10.0
+        },
+        {
+            "life_expectancy": 59.9,
+            "adult_mortality": 268.0,
+            "infant_deaths": 66.0,
+            "alcohol": 0.01,
+            "percentage_expenditure": 73.21924272,
+            "hepatitis_B": 64.0,
+            "measles": 430.0,
+            "bmi": 18.1,
+            "under_five_deaths": 89.0,
+            "polio": 62.0,
+            "total_expenditure": 8.13,
+            "diphtheria": 64.0,
+            "hiv_aids": 0.1,
+            "gdp": 631.744976,
+            "population": 31731688.0,
+            "thinness_10_19_years": 17.7,
+            "thinness_5_9_years": 17.7,
+            "income_composition_of_resources": 0.47,
+            "schooling": 9.9
+        }]}
+Ya con esto se puede ejecutar el programa.
